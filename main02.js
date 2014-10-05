@@ -32,11 +32,13 @@ var taketurn = function(tile) {
 		per1.turns.push(tile.id);
 		per1.turn = false;
 		per2.turn = true;
-	} else {
+	} else if (per1.turn && tile.querySelector("img", "src", "blank.jpg")){
 		tile.querySelector("img").setAttribute("src",per2.image);
 		per2.turns.push(tile.id);
 		per2.turn = false;
 		per1.turn = true;
+	} else {
+		console.log("That tile has already been used.")
 	}
 };
 
