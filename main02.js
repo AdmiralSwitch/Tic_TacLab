@@ -18,7 +18,7 @@ var per2 = {
 var results1 = per1.turns.sort().map(Number);
 var results2 = per2.turns.sort().map(Number);
 
-/*vvv marks tiles as used if they've been played vvv */
+/*vvv Adds a id="taken" to the tiles that have been used. vvv */
 var tileRecorder = function(tile){
 	tile.querySelector("img").setAttribute("id","taken");		
 };
@@ -27,7 +27,7 @@ var tileRecorder = function(tile){
 
 var taketurn = function(tile) {
 	// who's turn
-	if (per1.turn){
+	if (per1.turn && tile.querySelector("img", "src", "blank.jpg")){
 		tile.querySelector("img").setAttribute("src",per1.image);
 		per1.turns.push(tile.id);
 		per1.turn = false;
@@ -76,8 +76,6 @@ Array.prototype.equals = function (array) {
     return true;
 };
 
-
-// record if tiles have been used.
 
 //vvv     checks to see if the locations match up to a win
 var results1 = per1.turns.sort(Number);
