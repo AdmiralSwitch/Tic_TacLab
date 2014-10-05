@@ -18,46 +18,45 @@ var per2 = {
 var results1 = per1.turns.sort().map(Number);
 var results2 = per2.turns.sort().map(Number);
 
-/*vvv Adds a id="taken" to the tiles that have been used. vvv */
-var tileRecorder = function(tile){
-	tile.querySelector("img").setAttribute("id","taken");		
-};
 
 //vvv     Below changes the image on the board. Determines who's turn it is. And records the locations clicked in the object arrays     vvv 
 
 var taketurn = function(tile) {
+
+	var test = tile.querySelector("img").getAttribute("src");
+	if (test == "x.jpg" || test == "o.jpg") {
+  		return;
+	}
 	// who's turn
-	if (per1.turn && tile.querySelector("img", "src", "blank.jpg")){
+	if (per1.turn/* && tile.querySelector("img", "src", "blank.jpg")*/){
 		tile.querySelector("img").setAttribute("src",per1.image);
 		per1.turns.push(tile.id);
 		per1.turn = false;
 		per2.turn = true;
-	} else if (per1.turn && tile.querySelector("img", "src", "blank.jpg")){
+	} else {
 		tile.querySelector("img").setAttribute("src",per2.image);
 		per2.turns.push(tile.id);
 		per2.turn = false;
 		per1.turn = true;
-	} else {
-		console.log("That tile has already been used.")
 	}
 };
 
-//vvv    anything you want to happen during the click needs to go in here.    vvv
+//vvv    any function you want to happen during the click needs to go in here.    vvv
 var selectItem = function( event ){
 	// console.log("something happened");
 	taketurn(this);
 	weHaveaWinner();
-	tileRecorder(this);
+	// tileRecorder(this);
 };
 
-// vvv     This is tha actual event listener, it calls the selectItem function.     vvv
+// vvv     This is tha actual event listener, it calls the selectItem function as long as the src="blank.jpg"    vvv
 for (i = 0; i < myArray.length; i++){
-	myArray[i].addEventListener("click", selectItem);
+	if (myArray[i].querySelector("img", "src", "blank.jpg")){
+		myArray[i].addEventListener("click", selectItem);
+	} else {
+		console.log("Already taken, dummy");
+	}
 }
-
-
-
-
 
 //vvv     .equals will compare 2 arrays for a win     vvv
 Array.prototype.equals = function (array) {
@@ -82,7 +81,10 @@ Array.prototype.equals = function (array) {
 //vvv     checks to see if the locations match up to a win
 var results1 = per1.turns.sort(Number);
 var results2 = per2.turns.sort(Number);
-var win = false;
+var per1winCheck = [];
+var per2winCheck = [];
+
+
 
 var weHaveaWinner = function (){
 	var results1 = per1.turns.sort().map(Number);
@@ -103,6 +105,10 @@ var weHaveaWinner = function (){
 	}
 
 };
+/* finding a winner in more than 3 moves. Maybe you push the current possible wins into another array and check the values off from there*/
+//Iterate over the possible moves array and see if that move is in any of the possible wins. If index = then return true. if 
+
+
 
 var resetButton = function () {
 	for (var i = 0; i < myArray.length; i++) {
@@ -116,24 +122,24 @@ var resetButton = function () {
 
 
 // attach the .equals method to Array's prototype to call it on any array
-Array.prototype.equals = function (array) {
-    // if the other array is a falsy value, return
-    if (!array)
-        return false;
-    if (this.length != array.length)
-        return false;
+// Array.prototype.equals = function (array) {
+//     // if the other array is a falsy value, return
+//     if (!array)
+//         return false;
+//     if (this.length != array.length)
+//         return false;
 
-    for (var i = 0, l=this.length; i < l; i++) {
-        if (this[i] instanceof Array && array[i] instanceof Array) {
-            if (!this[i].equals(array[i]))
-                return false;       
-        }           
-        else if (this[i] != array[i]) { 
-            return false;   
-        }           
-    }       
-    return true;
-};
+//     for (var i = 0, l=this.length; i < l; i++) {
+//         if (this[i] instanceof Array && array[i] instanceof Array) {
+//             if (!this[i].equals(array[i]))
+//                 return false;       
+//         }           
+//         else if (this[i] != array[i]) { 
+//             return false;   
+//         }           
+//     }       
+//     return true;
+// };
 
 var initialize = function(){
 
