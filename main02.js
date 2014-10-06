@@ -81,8 +81,6 @@ Array.prototype.equals = function (array) {
 var results1 = per1.turns.sort(Number);
 var results2 = per2.turns.sort(Number);
 
-
-
 var weHaveaWinner = function (){
 	var results1 = per1.turns.sort().map(Number);
 	var results2 = per2.turns.sort().map(Number);
